@@ -8,9 +8,10 @@
     "dev:server": "tsx watch server/index.ts",
     "dev:web": "vite",
     "build": "vite build",
-    "start": "tsx server/index.ts",
+    "start": "node -e \"const fs=require('fs');process.exit(fs.existsSync('dist-server/server/index.js')?0:1)\" && node dist-server/server/index.js || tsx server/index.ts",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.web.json"
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tsconfig.web.json",
+    "compile": "tsc -p tsconfig.build.json"
   },
   "dependencies": {
     "@hono/node-server": "2.1.6",

@@ -1,14 +1,14 @@
 import { spawn } from 'node:child_process'
 import { existsSync, readFileSync } from 'node:fs'
 import { homedir } from 'node:os'
-import { dirname, join, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { join } from 'node:path'
 import type { CliResult } from '../shared/types.js'
+import { ROOT } from './store.js'
 import { isValidAgent, isValidSkillName, OWNER_RE, REPO_NAME_RE } from './validate.js'
 
 const ANSI_RE = /[\u001b\u009b][[\]()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g
 
-export const PROJECT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+export const PROJECT_ROOT = ROOT
 export const DEFAULT_CLI_PATH = join(PROJECT_ROOT, 'node_modules', 'skills', 'bin', 'cli.mjs')
 
 export function stripAnsi(s: string): string {

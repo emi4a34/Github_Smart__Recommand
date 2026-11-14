@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { homedir } from 'node:os'
-import { join, resolve } from 'node:path'
+import { basename, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { Hono } from 'hono'
 import { serve } from '@hono/node-server'
@@ -469,7 +469,7 @@ export function createApp(deps: AppDeps) {
 
 const invokedAsScript = (() => {
   try {
-    return Boolean(process.argv[1]) && resolve(process.argv[1]).toLowerCase() === fileURLToPath(import.meta.url).toLowerCase()
+    return Boolean(process.argv[1]) && resolve(process.argv[1]).toLowerCase() === fileURLToPath(import.meta.url).toLowerCase() || basename(process.argv[1] ?? '') === basename(fileURLToPath(import.meta.url))
   } catch {
     return false
   }

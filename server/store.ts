@@ -3,7 +3,8 @@ import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { AppConfig, Project } from '../shared/types.js'
 
-export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const here = dirname(fileURLToPath(import.meta.url))
+export const ROOT = existsSync(join(here, '..', 'package.json')) ? resolve(here, '..') : resolve(here, '..', '..')
 export const DEFAULT_DATA_DIR = join(ROOT, 'data')
 
 export function atomicWrite(file: string, data: string): void {

@@ -26,6 +26,19 @@ npm start        # http://127.0.0.1:4777
 npm run dev      # 前端 http://localhost:5173，/api 代理到 127.0.0.1:4777
 ```
 
+## 在其他電腦執行（Windows）
+
+前置需求：Git 與 Node.js 22.20+。要用「安裝 skill」功能的話，該電腦也要先裝好 Devin 或 Cursor（skill 會寫到它們的目錄）。
+
+```bat
+git clone https://github.com/emi4a34/Github_Smart__Recommand.git
+cd Github_Smart__Recommand
+install.bat     :: npm ci + build 前端 + 編譯後端（只需做一次）
+start.bat       :: 啟動 http://127.0.0.1:4777
+```
+
+之後每次要用只要執行 `start.bat`。GitHub token 到介面「設定」填入即可，不用設環境變數。
+
 ## 設定
 
 資料存於 `data/`（gitignored）：`projects.json`、`config.json`、`cache/`。
