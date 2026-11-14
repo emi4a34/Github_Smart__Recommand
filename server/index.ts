@@ -13,6 +13,7 @@ import { scanInventory } from './inventory.js'
 import { projectStatus } from './status.js'
 import { CliValidationError, createSkillsCli, type SkillsCli } from './skillsCli.js'
 import { buildProfile, buildQueries, rankRecommendations, type CandidateRepo, type ProfileProject } from './recommend.js'
+import { TRENDING_SORTS, trendingRange, type TrendingSort } from './trending.js'
 import { OWNER_RE, REPO_NAME_RE, isValidAgent, isValidSkillName, parseRepo } from './validate.js'
 import { fmString, parseFrontmatter } from './frontmatter.js'
 
@@ -270,6 +271,17 @@ export function createApp(deps: AppDeps) {
     const query = [q, topic ? `topic:${topic}` : ''].filter(Boolean).join(' ')
     const items = await deps.github.searchRepos(query, { perPage: 30 })
     return c.json({ query, results: items.map(toSearchCard) })
+  })
+
+  app.get('/api/trending', async (c) => {
+    const month = c.req.query('month') ?? ''
+    const week = Number(c.req.query('week') ?? '0')
+    const sort = (c.req.query('sort') ?? 'stars') as TrendingSort
+    const range = trendingRange(month, week)
+    if (!range) return badRequest(c, '月份格式須為 YYYY-MM（不可為未來月份），週數為 0（全月）至 4')
+    if (!TRENDING_SORTS.includes(sort)) return badRequest(c, '不支援的排序方式')
+    const items = await deps.github.searchRepos(`created:${range.start}..${range.end}`, { perPage: 50, sort, order: 'desc' })
+    return c.json({ month, week, sort, range, results: items.map(toSearchCard) })
   })
 
   app.get('/api/recommendations', async (c) => {

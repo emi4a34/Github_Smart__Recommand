@@ -30,7 +30,7 @@ export interface GithubDeps {
 
 export interface GithubClient {
   getRepo(owner: string, repo: string): Promise<Record<string, any>>
-  searchRepos(query: string, opts?: { perPage?: number }): Promise<Record<string, any>[]>
+  searchRepos(query: string, opts?: { perPage?: number; sort?: string; order?: 'asc' | 'desc' }): Promise<Record<string, any>[]>
   getTree(owner: string, repo: string): Promise<GitTree>
   getRawFile(owner: string, repo: string, ref: string, path: string, blobSha?: string): Promise<string>
 }
@@ -173,9 +173,11 @@ export function createGithub(deps: GithubDeps): GithubClient {
 
     async searchRepos(query, opts) {
       const perPage = opts?.perPage ?? 30
+      const sort = opts?.sort ?? 'stars'
+      const order = opts?.order ?? 'desc'
       const q = encodeURIComponent(query)
       const data = await apiFetch(
-        `https://api.github.com/search/repositories?q=${q}&sort=stars&order=desc&per_page=${perPage}`,
+        `https://api.github.com/search/repositories?q=${q}&sort=${sort}&order=${order}&per_page=${perPage}`,
         TTL.search,
       )
       return Array.isArray(data?.items) ? data.items : []

@@ -168,6 +168,16 @@ body {
 .add-repo { display: flex; gap: 8px; flex: 1; max-width: 560px; }
 .add-repo .input { flex: 1; }
 
+.trending-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.trending-controls .check { display: flex; align-items: center; gap: 6px; }
+.trending-controls .input { width: auto; padding: 4px 8px; }
+
 /* ---------- chips ---------- */
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
 .chip {

@@ -1,12 +1,12 @@
 @echo off
 cd /d "%~dp0"
 if not exist web\dist\index.html (
-  echo [錯誤] 找不到 web\dist，請先執行 install.bat
+  echo [Error] not found web\dist，please run install.bat
   pause
   exit /b 1
 )
-echo Skill Hub 啟動中... 關閉此視窗即停止。
-echo 開啟 http://127.0.0.1:4777
+echo Skill Hub Starting... Close this window to stop。
+echo Open http://127.0.0.1:4777
 echo.
 if not defined SKILL_HUB_NO_BROWSER (
   start "" /min cmd /c "timeout /t 2 /nobreak >nul & start http://127.0.0.1:4777"

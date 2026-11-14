@@ -13,12 +13,14 @@ import { ProjectsView } from './views/ProjectsView'
 import { SkillsView, type SkillToolFilter } from './views/SkillsView'
 import { SearchView } from './views/SearchView'
 import { RecommendView } from './views/RecommendView'
+import { TrendingView } from './views/TrendingView'
 import { SettingsView } from './views/SettingsView'
 
 export type View =
   | { type: 'projects'; category?: string }
   | { type: 'search' }
   | { type: 'recommend' }
+  | { type: 'trending' }
   | { type: 'skills'; tool: SkillToolFilter }
   | { type: 'settings' }
 
@@ -30,6 +32,8 @@ function parseHash(): View {
       return { type: 'search' }
     case 'recommend':
       return { type: 'recommend' }
+    case 'trending':
+      return { type: 'trending' }
     case 'skills': {
       const t = rest[0]
       if (t === 'devin' || t === 'cursor' || t === 'claude' || t === 'builtin') {
@@ -58,6 +62,8 @@ function serializeView(v: View): string {
       return '#/search'
     case 'recommend':
       return '#/recommend'
+    case 'trending':
+      return '#/trending'
     case 'skills':
       return `#/skills/${v.tool === 'all' ? 'all' : v.tool}`
     case 'settings':
@@ -168,6 +174,9 @@ export default function App() {
             )}
             {view.type === 'search' && (
               <SearchView config={config} savedRepos={savedRepos} onChanged={refreshAll} onError={onError} />
+            )}
+            {view.type === 'trending' && (
+              <TrendingView savedRepos={savedRepos} onChanged={refreshAll} onError={onError} />
             )}
             {view.type === 'recommend' && (
               <RecommendView savedRepos={savedRepos} onChanged={refreshAll} onError={onError} />

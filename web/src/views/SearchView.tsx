@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { PublicConfig, SearchCard } from '../../../shared/types'
 import { api, isApiError, ApiError } from '../api'
+import { useSaveProject } from '../useSaveProject'
 import { RepoCard } from '../components/RepoCard'
 
 export function SearchView({
@@ -18,7 +19,7 @@ export function SearchView({
   const [results, setResults] = useState<SearchCard[] | null>(null)
   const [searched, setSearched] = useState('')
   const [loading, setLoading] = useState(false)
-  const [saving, setSaving] = useState<string | null>(null)
+  const { saving, save } = useSaveProject(onChanged, onError)
 
   const run = async (query: string, topic?: string) => {
     const term = topic ?? query.trim()
@@ -33,18 +34,6 @@ export function SearchView({
       onError(isApiError(e) ? e : new ApiError(0, String(e)))
     } finally {
       setLoading(false)
-    }
-  }
-
-  const save = async (repo: string) => {
-    setSaving(repo)
-    try {
-      await api.addProject(repo)
-      onChanged()
-    } catch (e) {
-      onError(isApiError(e) ? e : new ApiError(0, String(e)))
-    } finally {
-      setSaving(null)
     }
   }
 

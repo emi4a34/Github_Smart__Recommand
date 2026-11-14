@@ -91,6 +91,14 @@ export interface AppConfig {
   searchTopics: string[]
 }
 
+export interface TrendingResponse {
+  month: string
+  week: number
+  sort: string
+  range: { start: string; end: string }
+  results: SearchCard[]
+}
+
 export interface CliResult {
   code: number | null
   stdout: string

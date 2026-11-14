@@ -44,6 +44,7 @@ export function Sidebar({
         {item({ type: 'projects' }, 'GitHub 專案', projects?.length ?? 0)}
         {item({ type: 'search' }, '搜尋')}
         {item({ type: 'recommend' }, '智慧推薦')}
+        {item({ type: 'trending' }, '熱度榜')}
       </nav>
 
       <nav className="nav-group">

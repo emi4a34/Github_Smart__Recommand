@@ -5,6 +5,7 @@ import type {
   ProjectEntry,
   PublicConfig,
   RecommendationsResponse,
+  TrendingResponse,
   RepoSkillsResponse,
   SearchCard,
 } from '../../shared/types'
@@ -60,6 +61,8 @@ export const api = {
     return request<{ query: string; results: SearchCard[] }>(`/api/search?${params.toString()}`)
   },
   getRecommendations: () => request<RecommendationsResponse>('/api/recommendations'),
+  getTrending: (month: string, week: number, sort: string) =>
+    request<TrendingResponse>(`/api/trending?month=${month}&week=${week}&sort=${sort}`),
   getInventory: () => request<InventoryResult>('/api/inventory'),
   install: (repo: string, skills: string[], agents: string[]) =>
     request<CliResponse>('/api/install', { method: 'POST', body: JSON.stringify({ repo, skills, agents }) }),

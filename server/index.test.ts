@@ -257,4 +257,34 @@ describe('routes', () => {
     expect(missing.status).toBe(404)
   })
 
+  it('GET /api/trending builds created range and passes sort', async () => {
+    const calls: any[] = []
+    deps.github = {
+      ...deps.github as any,
+      searchRepos: async (q: string, opts?: any) => {
+        calls.push({ q, opts })
+        return [{ full_name: 'o/r', name: 'r', owner: { login: 'o' }, stargazers_count: 1 }]
+      },
+    } as any
+    const res = await req('/api/trending?month=2025-11&week=1&sort=forks')
+    expect(res.status).toBe(200)
+    expect(calls[0].q).toBe('created:2025-11-01..2025-11-07')
+    expect(calls[0].opts).toMatchObject({ perPage: 50, sort: 'forks', order: 'desc' })
+    const body = await res.json() as any
+    expect(body.results[0].repo).toBe('o/r')
+    expect(body.range).toEqual({ start: '2025-11-01', end: '2025-11-07' })
+  })
+
+  it('GET /api/trending rejects bad params', async () => {
+    for (const q of ['month=2025-13&week=0', 'month=2999-01&week=0', 'month=2025-11&week=9', 'month=2025-11&week=x', 'month=2025-11&week=0&sort=bad', 'month=2025-11']) {
+      const res = await req(`/api/trending?${q}`)
+      // 'month=2025-11' without week defaults to 0 → valid, skip it
+      if (q === 'month=2025-11') {
+        expect(res.status).toBe(200)
+      } else {
+        expect(res.status).toBe(400)
+      }
+    }
+  })
+
 })
