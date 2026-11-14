@@ -5,6 +5,12 @@ if not exist web\dist\index.html (
   pause
   exit /b 1
 )
+netstat -ano | findstr /R /C:":4777 .*LISTENING" >nul
+if %errorlevel%==0 (
+  echo Skill Hub is already running. Opening browser...
+  start http://127.0.0.1:4777
+  exit /b 0
+)
 echo Skill Hub Starting... Close this window to stop。
 echo Open http://127.0.0.1:4777
 echo.
