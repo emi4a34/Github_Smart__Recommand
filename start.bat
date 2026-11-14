@@ -8,5 +8,8 @@ if not exist web\dist\index.html (
 echo Skill Hub 啟動中... 關閉此視窗即停止。
 echo 開啟 http://127.0.0.1:4777
 echo.
+if not defined SKILL_HUB_NO_BROWSER (
+  start "" /min cmd /c "timeout /t 2 /nobreak >nul & start http://127.0.0.1:4777"
+)
 node dist-server\server\index.js
 pause

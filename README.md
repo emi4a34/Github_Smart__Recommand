@@ -37,7 +37,7 @@ install.bat     :: npm ci + build 前端 + 編譯後端（只需做一次，會�
 start.bat       :: 啟動 http://127.0.0.1:4777
 ```
 
-之後每次要用：雙擊桌面「Skill Hub」捷徑，或執行 `start.bat`。GitHub token 到介面「設定」填入即可，不用設環境變數。
+之後每次要用：雙擊桌面「Skill Hub」捷徑，或執行 `start.bat`（會自動開啟瀏覽器；設 `SKILL_HUB_NO_BROWSER=1` 可關閉自動開啟）。GitHub token 到介面「設定」填入即可，不用設環境變數。
 
 ## 設定
 
