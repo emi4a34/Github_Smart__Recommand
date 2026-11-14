@@ -23,6 +23,10 @@ if not exist web\dist\index.html (
 echo [3/3] 編譯後端...
 call npm run compile || (echo [錯誤] npm run compile 失敗 & pause & exit /b 1)
 
+rem 在桌面建立「Skill Hub」捷徑
+powershell -NoProfile -Command "$ws = New-Object -ComObject WScript.Shell; $desktop = [Environment]::GetFolderPath('Desktop'); $sc = $ws.CreateShortcut(\"$desktop\Skill Hub.lnk\"); $sc.TargetPath = '%ComSpec%'; $sc.Arguments = '/c \"\"%~dp0start.bat\"\"'; $sc.WorkingDirectory = '%~dp0'; $sc.Description = '啟動 Skill Hub (http://127.0.0.1:4777)'; $sc.Save()" >nul 2>&1
+
 echo.
-echo 完成！執行 start.bat 啟動，然後開啟 http://127.0.0.1:4777
+echo 完成！桌面已建立「Skill Hub」捷徑，或執行 start.bat 啟動。
+echo 開啟 http://127.0.0.1:4777
 pause

@@ -33,11 +33,11 @@ npm run dev      # 前端 http://localhost:5173，/api 代理到 127.0.0.1:4777
 ```bat
 git clone https://github.com/emi4a34/Github_Smart__Recommand.git
 cd Github_Smart__Recommand
-install.bat     :: npm ci + build 前端 + 編譯後端（只需做一次）
+install.bat     :: npm ci + build 前端 + 編譯後端（只需做一次，會在桌面建立捷徑）
 start.bat       :: 啟動 http://127.0.0.1:4777
 ```
 
-之後每次要用只要執行 `start.bat`。GitHub token 到介面「設定」填入即可，不用設環境變數。
+之後每次要用：雙擊桌面「Skill Hub」捷徑，或執行 `start.bat`。GitHub token 到介面「設定」填入即可，不用設環境變數。
 
 ## 設定
 
